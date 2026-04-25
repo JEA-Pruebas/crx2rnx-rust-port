@@ -72,7 +72,7 @@ cat ~/.ssh/id_ed25519.pub
 
 Copiar en:
 
-GitLab → User Settings → Access → SSH keys
+`GitLab → User Settings → Access → SSH keys`
 
 ### 3. Registrar la clave en el agente SSH
 
@@ -118,11 +118,9 @@ Para verificar si Docker Compose v2 está correctamente instalado:
 ```bash
 docker compose version
 ```
-
-
 ---
 
-### Solución
+### 💡 Solución
 
 Si el comando no está disponible, es necesario instalar o habilitar Docker Compose v2.
 
@@ -176,8 +174,8 @@ El entorno se considera correctamente configurado y listo para comenzar a trabaj
 ## 🛠 Tecnologías utilizadas
 
 - Java (backend) 
-- React (frontend). Según template.
-- PostgreSQL (base de datos). Según template.
+- React (frontend). Según template proveído.
+- PostgreSQL (base de datos). Según template proveído.
 - Docker / Docker Compose
 - GitLab (CI/CD)
 
@@ -191,11 +189,11 @@ El entorno se considera correctamente configurado y listo para comenzar a trabaj
 
 ---
 
-🧾 Conclusión
+# 🧾 Conclusión
 
 Se definió y validó un entorno de desarrollo reproducible utilizando Docker y Docker Compose.
 
-Se logró:
+Resultados:
 
 - Clonar el repositorio mediante acceso SSH
 - Levantar el sistema completo utilizando Docker Compose
@@ -203,4 +201,4 @@ Se logró:
 - Verificar el correcto funcionamiento de los servicios mediante `docker compose ps`
 - Confirmar la inicialización del backend y la conexión a la base de datos a través de los logs
 
-El entorno permite ejecutar el sistema de manera consistente en distintas máquinas, facilitando el desarrollo y evitando problemas de configuración local.
+El entorno permite ejecutar el sistema de manera consistente en distintas computadoras, facilitando el desarrollo y evitando problemas de configuración local.
