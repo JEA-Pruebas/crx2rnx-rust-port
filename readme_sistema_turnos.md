@@ -1,14 +1,12 @@
-# Sistema de Turnos - Grupo 02
+# 🛠️ Definición del Entorno de Desarrollo
 
-## Definición de Entornos de Desarrollo
-
-Este documento describe cómo configurar y ejecutar el entorno de desarrollo del proyecto de forma local, asegurando que cualquier integrante del equipo pueda reproducir el sistema en su máquina.
+Este documento describe cómo configurar y ejecutar el entorno de desarrollo del proyecto de forma local, asegurando que cualquier integrante del equipo pueda reproducir el sistema en su computadora.
 
 ---
 
-## 🚀 Quick Start (ejecución rápida)
+## 🚀 Quick Start
 
-Clonar el repositorio:
+Clonar el repositorio proveído por la cátedra:
 
 ```bash
 git clone git@gitlab.com:ayudantes-ingsoft/sistema-turnos-grupo-02.git
@@ -29,29 +27,18 @@ http://localhost:20000
 
 ## 🧩 Requisitos
 
-- Docker (versión reciente)
 - Git
+- Docker (versión reciente)
 
 ### Verificación de Docker Compose
 
 El proyecto requiere Docker Compose v2 (`docker compose`).
 
-Verificar instalación:
+Verificar instalación con:
 
 ```bash
 docker compose version
 ```
-
----
-
-## ⚠️ Docker Compose (detalle importante)
-
-En algunos entornos puede ocurrir que:
-
-- `docker compose` no esté disponible
-- o solo esté instalado `docker-compose` (versión antigua)
-
-En ese caso, será necesario instalar o habilitar Docker Compose v2 según el sistema operativo.
 
 ---
 
@@ -65,21 +52,91 @@ Para clonar el repositorio es necesario contar con acceso mediante SSH a GitLab.
 ssh-keygen -t ed25519 -C "tu_email@example.com"
 ```
 
+⚠️ Importante:
+
+Si el archivo `~/.ssh/id_ed25519` ya existe (por ejemplo, porque se utiliza para GitHub u otro servicio), el sistema mostrará un mensaje indicando que el archivo ya existe.
+
+En ese caso, no sobrescribir la clave existente. En su lugar, especificar un nuevo nombre, por ejemplo:
+
+
+`/home/usuario/.ssh/id_ed25519_gitlab`
+
+De esta forma se evita interferir con otras configuraciones SSH.
+
 ### 2. Agregar la clave a GitLab
 
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
+(Si se utilizó otro nombre, ajustar el comando correspondiente)
 
 Copiar en:
 
 GitLab → User Settings → Access → SSH keys
 
-### 3. Verificar conexión
+### 3. Registrar la clave en el agente SSH
+
+Si se creó una nueva clave, es necesario cargarla en el agente SSH:
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+### 4. Verificar conexión
 
 ```bash
 ssh -T git@gitlab.com
 ```
+
+Si la configuración es correcta, se mostrará un mensaje de bienvenida indicando que la autenticación fue exitosa.
+
+---
+
+## 🐳 Docker Compose (detalle importante)
+
+El proyecto utiliza **Docker Compose v2**, el cual se ejecuta mediante el comando:
+
+`docker compose`
+
+(no confundir con `docker-compose`, que corresponde a una versión anterior)
+
+---
+### Posibles problemas
+
+En algunos entornos puede ocurrir que:
+
+- El comando `docker compose` no esté disponible  
+- Solo funcione `docker-compose` (versión antigua)  
+- Se obtenga un error como:
+
+  `unknown command: docker compose`
+
+### Verificación
+
+Para verificar si Docker Compose v2 está correctamente instalado:
+```bash
+docker compose version
+```
+
+
+---
+
+### Solución
+
+Si el comando no está disponible, es necesario instalar o habilitar Docker Compose v2.
+
+Esto puede implicar:
+
+- Instalar el plugin de Docker Compose  
+- Actualizar la instalación de Docker  
+- Configurar correctamente el entorno (por ejemplo en WSL)
+
+⚠️ En este proyecto **no es suficiente usar `docker-compose`**, ya que el archivo `docker-compose.yml` utiliza características de la versión 2.
+
+### Recomendación
+
+Se recomienda utilizar una instalación reciente de Docker que incluya soporte nativo para `docker compose`, para evitar problemas de compatibilidad.
 
 ---
 
@@ -100,14 +157,15 @@ Variables principales:
 - Aplicación web:
   http://localhost:20000
 
-- API backend:
-  http://localhost:20000/api
+- Base de datos (PostgreSQL): http://localhost:20001
+
+  Nota: este puerto no es accesible desde el navegador, sino mediante clientes de base de datos.
 
 ---
 
 ## ✅ Validación del entorno
 
-El entorno se considera correctamente configurado si:
+El entorno se considera correctamente configurado y listo para comenzar a trabajar si:
 
 - `docker compose ps` muestra servicios activos
 - La aplicación carga en el navegador
@@ -119,21 +177,13 @@ El entorno se considera correctamente configurado si:
 
 - Java (backend) 
 - React (frontend). Según template.
-- PostgreSQL (base de datos)
+- PostgreSQL (base de datos). Según template.
 - Docker / Docker Compose
 - GitLab (CI/CD)
 
 ---
 
-## 🐞 Problemas comunes
-
-- Docker Compose no disponible
-
-  Verificar:
-
-  ```bash
-  docker compose version
-  ```
+## 🐞 Otros problemas comunes
 
 - Puertos ocupados
 
@@ -141,16 +191,16 @@ El entorno se considera correctamente configurado si:
 
 ---
 
-## 🧠 Justificación del entorno
+🧾 Conclusión
 
-El uso de Docker permite:
+Se definió y validó un entorno de desarrollo reproducible utilizando Docker y Docker Compose.
 
-- Consistencia entre entornos
-- Replicabilidad
-- Aislamiento de servicios
+Se logró:
 
----
+- Clonar el repositorio mediante acceso SSH
+- Levantar el sistema completo utilizando Docker Compose
+- Acceder a la aplicación desde el navegador en http://localhost:20000
+- Verificar el correcto funcionamiento de los servicios mediante `docker compose ps`
+- Confirmar la inicialización del backend y la conexión a la base de datos a través de los logs
 
-## 🧾 Conclusión
-
-El entorno permite ejecutar el sistema completo de manera reproducible mediante Docker Compose.
+El entorno permite ejecutar el sistema de manera consistente en distintas máquinas, facilitando el desarrollo y evitando problemas de configuración local.
